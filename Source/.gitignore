@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+
+# Gulp build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+
+# Cache and temp
+.cache/
+.temp/
+.tmp/
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Git backup files
+*.swp
+*.swo
+
+# Compiled CSS/JS (if not using dist/)
+*.css
+*.css.map
+*.js
+*.js.map
