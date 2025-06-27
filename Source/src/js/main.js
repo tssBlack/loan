@@ -2,6 +2,7 @@ import Slider from "./modules/sliders/slider";
 import pageSlider from "./modules/sliders/pageSlider";
 import ModuleSlider from "./modules/sliders/moduleslider";
 import videoPlayer from "./modules/videoPlayer";
+import Difference from "./modules/difference";
 
 window.addEventListener('DOMContentLoaded', () => {
     const pageslider = new pageSlider({
@@ -31,8 +32,16 @@ window.addEventListener('DOMContentLoaded', () => {
         activeClass: '.feed__item-active',
         slideClass: '.feed__item'
     })
+
+    const difference = new Difference({
+        officerold: '.officerold',
+        officernew: '.officernew',
+        item: '.officer__card-item',
+        btn: '.card__click'
+    })
 });
 
 
 
-//1, 3, 8
+//1, 3, 4, 5, 6, 7, 8, 10
+//2 9 11 12 13 

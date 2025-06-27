@@ -2,6 +2,65 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/modules/difference.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/difference.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Difference)
+/* harmony export */ });
+class Difference {
+  constructor({
+    officerold,
+    officernew,
+    item,
+    btn
+  }) {
+    this.officerold = document.querySelector(officerold);
+    this.officernew = document.querySelector(officernew);
+    this.itemOld = this.officerold.querySelectorAll(item);
+    this.itemNew = this.officernew.querySelectorAll(item);
+    this.btnOld = this.officerold.querySelector(btn);
+    this.btnNew = this.officernew.querySelector(btn);
+    this.hideItems();
+    this.itemIndexOld = 0;
+    this.itemIndexNew = 0;
+    this.btnOld.addEventListener('click', () => this.showItemsOld());
+    this.btnNew.addEventListener('click', () => this.showItemsNew());
+  }
+  hideItems() {
+    this.itemOld.forEach(item => {
+      if (item !== this.btnOld.parentElement) {
+        item.style.display = 'none';
+      }
+    });
+    this.itemNew.forEach(item => {
+      if (item !== this.btnNew.parentElement) {
+        item.style.display = 'none';
+      }
+    });
+  }
+  showItemsOld() {
+    this.itemOld[this.itemIndexOld].style.display = '';
+    this.itemIndexOld++;
+    if (this.itemIndexOld >= this.itemOld.length - 1) {
+      this.btnOld.parentElement.style.display = 'none';
+    }
+  }
+  showItemsNew() {
+    this.itemNew[this.itemIndexNew].style.display = '';
+    this.itemIndexNew++;
+    if (this.itemIndexNew >= this.itemNew.length - 1) {
+      this.btnNew.parentElement.style.display = 'none';
+    }
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/modules/sliders/moduleslider.js":
 /*!************************************************!*\
   !*** ./src/js/modules/sliders/moduleslider.js ***!
@@ -39,6 +98,7 @@ class ModuleSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this.prev.forEach(el => {
       el.addEventListener('click', () => this.prevSlide());
     });
+    this.activeElement();
   }
   nextSlide() {
     const firstSlide = this.slides[0];
@@ -63,6 +123,7 @@ class ModuleSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
     if (this.activeClass === 'card-active') {
       const activeEl = this.slider.querySelector('.' + this.activeClass + ' .card__title');
       if (activeEl) {
+        this.slider.querySelector('.card__controls-arrow').style.opacity = '1';
         activeEl.style.opacity = '1';
       }
     }
@@ -71,6 +132,7 @@ class ModuleSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
     if (this.activeClass === 'card-active') {
       const activeEl = this.slider.querySelector('.' + this.activeClass + ' .card__title');
       if (activeEl) {
+        this.slider.querySelector('.card__controls-arrow').style.opacity = '';
         activeEl.style.opacity = '';
       }
     }
@@ -153,11 +215,10 @@ class Slider {
     selector = '',
     next = '',
     prev = '',
-    activeClass = '',
-    slideClass = ''
+    activeClass = ''
   } = {}) {
     this.slider = document.querySelector(selector);
-    this.slides = slideClass ? this.slider.querySelectorAll(slideClass) : Array.from(this.slider.children);
+    this.slides = Array.from(this.slider.children);
     this.next = next ? Array.from(document.querySelectorAll(next)) : [];
     this.prev = prev ? Array.from(document.querySelectorAll(prev)) : [];
     this.activeClass = activeClass.replace(/\./g, '');
@@ -286,6 +347,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_sliders_pageSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/sliders/pageSlider */ "./src/js/modules/sliders/pageSlider.js");
 /* harmony import */ var _modules_sliders_moduleslider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/sliders/moduleslider */ "./src/js/modules/sliders/moduleslider.js");
 /* harmony import */ var _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/videoPlayer */ "./src/js/modules/videoPlayer.js");
+/* harmony import */ var _modules_difference__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/difference */ "./src/js/modules/difference.js");
+
 
 
 
@@ -315,9 +378,16 @@ window.addEventListener('DOMContentLoaded', () => {
     activeClass: '.feed__item-active',
     slideClass: '.feed__item'
   });
+  const difference = new _modules_difference__WEBPACK_IMPORTED_MODULE_4__["default"]({
+    officerold: '.officerold',
+    officernew: '.officernew',
+    item: '.officer__card-item',
+    btn: '.card__click'
+  });
 });
 
-//1, 3, 8
+//1, 3, 4, 5, 6, 7, 8, 10
+//2 9 11 12 13
 })();
 
 /******/ })()
