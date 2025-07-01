@@ -5,43 +5,69 @@ import videoPlayer from "./modules/videoPlayer";
 import Difference from "./modules/difference";
 
 window.addEventListener('DOMContentLoaded', () => {
-    const pageslider = new pageSlider({
-        selector: '.page',
-        next: '.next'
-    });
-    const video = new videoPlayer('.play');
+    // Проверка .page
+    if (document.querySelector('.page')) {
+        const pageslider = new pageSlider({
+            selector: '.page',
+            next: '.next'
+        });
+    }
 
-    const educationalModule = new ModuleSlider({
-        selector: '.showup__content-slider',
-        next: '.showup__next',
-        prev: '.showup__prev',
-        activeClass: '.card-active'
-    });
+    // Видео
+    if (document.querySelector('.play')) {
+        const video = new videoPlayer('.play');
+    }
 
-    const modulesModule = new ModuleSlider({
-        selector: '.modules__content-slider',
-        next: '.modules__info-btns .slick-next',
-        prev: '.modules__info-btns .slick-prev',
-        activeClass: '.card-active'
-    });
+    // showup
+    if (document.querySelector('.showup__content-slider')) {
+        const educationalModule = new ModuleSlider({
+            selector: '.showup__content-slider',
+            next: '.showup__next',
+            prev: '.showup__prev',
+            activeClass: '.card-active'
+        });
+    }
 
-    const feedModule = new ModuleSlider({ 
-        selector: '.feed__slider',
-        next: '.feed__slider .slick-next',
-        prev: '.feed__slider .slick-prev',
-        activeClass: '.feed__item-active',
-        slideClass: '.feed__item'
-    })
+    // modules
+    if (document.querySelector('.modules__content-slider')) {
+        const modulesModule = new ModuleSlider({
+            selector: '.modules__content-slider',
+            next: '.modules__info-btns .slick-next',
+            prev: '.modules__info-btns .slick-prev',
+            activeClass: '.card-active'
+        });
+    }
 
-    const difference = new Difference({
-        officerold: '.officerold',
-        officernew: '.officernew',
-        item: '.officer__card-item',
-        btn: '.card__click'
-    })
+    // feed
+    if (document.querySelector('.feed__slider')) {
+        const feedModule = new ModuleSlider({
+            selector: '.feed__slider',
+            next: '.feed__slider .slick-next',
+            prev: '.feed__slider .slick-prev',
+            activeClass: '.feed__item-active',
+            slideClass: '.feed__item'
+        });
+    }
+
+    // difference
+    if (
+        document.querySelector('.officerold') &&
+        document.querySelector('.officernew')
+    ) {
+        const difference = new Difference({
+            officerold: '.officerold',
+            officernew: '.officernew',
+            item: '.officer__card-item',
+            btn: '.card__click'
+        });
+    }
+
+    // pageSlider на module
+    if (document.querySelector('.moduleapp')) {
+        const moduleSlider = new pageSlider({
+            selector: '.moduleapp',
+            next: '.next',
+            prev: '.prev'
+        });
+    }
 });
-
-
-
-//1, 3, 4, 5, 6, 7, 8, 10
-//2 9 11 12 13 

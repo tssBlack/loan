@@ -2,6 +2,7 @@ export default class VideoPlayer {
     constructor(selector) {
         this.players = document.querySelectorAll(selector);
         this.video = '';
+        this.check = false;
 
         this.players.forEach(player => {
             player.addEventListener('click', (event) => {
@@ -42,5 +43,6 @@ export default class VideoPlayer {
         const container = overlay.querySelector('#frame');
         container.innerHTML = ``;
         overlay.style.display = 'none';
+        this.check = true;
     }
 }

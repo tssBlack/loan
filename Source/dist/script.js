@@ -102,8 +102,8 @@ class ModuleSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
   }
   nextSlide() {
     const firstSlide = this.slides[0];
-    this.slider.appendChild(firstSlide);
     this.deActiveElement();
+    this.slider.appendChild(firstSlide);
     firstSlide.classList.remove(this.activeClass);
     this.slides = Array.from(this.slider.children).filter(el => el.tagName !== 'BUTTON');
     this.slides[0].classList.add(this.activeClass);
@@ -156,13 +156,22 @@ __webpack_require__.r(__webpack_exports__);
 class pageSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor({
     selector,
-    next
+    next,
+    prev
   }) {
     super({
       selector,
-      next
+      next,
+      prev
     });
     this.slider.querySelectorAll(next).forEach(button => {
+      button.addEventListener('click', () => this.nextSlide());
+      button.parentElement.previousElementSibling.addEventListener('click', () => {
+        this.currentIndex = 0;
+        this.showSlide();
+      });
+    });
+    this.slider.querySelectorAll(prev).forEach(button => {
       button.addEventListener('click', () => this.nextSlide());
       button.parentElement.previousElementSibling.addEventListener('click', () => {
         this.currentIndex = 0;
@@ -181,6 +190,18 @@ class pageSlider extends _slider__WEBPACK_IMPORTED_MODULE_0__["default"] {
       this.currentIndex++;
     } else {
       this.currentIndex = 0;
+    }
+    this.slides[this.currentIndex].style.display = 'block';
+    if (this.currentIndex === 2) {
+      this.hanson();
+    }
+  }
+  prevSlide() {
+    this.slides[this.currentIndex].style.display = 'none';
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      this.currentIndex = this.slides.length - 1;
     }
     this.slides[this.currentIndex].style.display = 'block';
     if (this.currentIndex === 2) {
@@ -242,6 +263,7 @@ class VideoPlayer {
   constructor(selector) {
     this.players = document.querySelectorAll(selector);
     this.video = '';
+    this.check = false;
     this.players.forEach(player => {
       player.addEventListener('click', event => {
         if (event.currentTarget.dataset.url) {
@@ -275,6 +297,7 @@ class VideoPlayer {
     const container = overlay.querySelector('#frame');
     container.innerHTML = ``;
     overlay.style.display = 'none';
+    this.check = true;
   }
 }
 
@@ -354,40 +377,69 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  const pageslider = new _modules_sliders_pageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]({
-    selector: '.page',
-    next: '.next'
-  });
-  const video = new _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_3__["default"]('.play');
-  const educationalModule = new _modules_sliders_moduleslider__WEBPACK_IMPORTED_MODULE_2__["default"]({
-    selector: '.showup__content-slider',
-    next: '.showup__next',
-    prev: '.showup__prev',
-    activeClass: '.card-active'
-  });
-  const modulesModule = new _modules_sliders_moduleslider__WEBPACK_IMPORTED_MODULE_2__["default"]({
-    selector: '.modules__content-slider',
-    next: '.modules__info-btns .slick-next',
-    prev: '.modules__info-btns .slick-prev',
-    activeClass: '.card-active'
-  });
-  const feedModule = new _modules_sliders_moduleslider__WEBPACK_IMPORTED_MODULE_2__["default"]({
-    selector: '.feed__slider',
-    next: '.feed__slider .slick-next',
-    prev: '.feed__slider .slick-prev',
-    activeClass: '.feed__item-active',
-    slideClass: '.feed__item'
-  });
-  const difference = new _modules_difference__WEBPACK_IMPORTED_MODULE_4__["default"]({
-    officerold: '.officerold',
-    officernew: '.officernew',
-    item: '.officer__card-item',
-    btn: '.card__click'
-  });
-});
+  // Проверка .page
+  if (document.querySelector('.page')) {
+    const pageslider = new _modules_sliders_pageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      selector: '.page',
+      next: '.next'
+    });
+  }
 
-//1, 3, 4, 5, 6, 7, 8, 10
-//2 9 11 12 13
+  // Видео
+  if (document.querySelector('.play')) {
+    const video = new _modules_videoPlayer__WEBPACK_IMPORTED_MODULE_3__["default"]('.play');
+  }
+
+  // showup
+  if (document.querySelector('.showup__content-slider')) {
+    const educationalModule = new _modules_sliders_moduleslider__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      selector: '.showup__content-slider',
+      next: '.showup__next',
+      prev: '.showup__prev',
+      activeClass: '.card-active'
+    });
+  }
+
+  // modules
+  if (document.querySelector('.modules__content-slider')) {
+    const modulesModule = new _modules_sliders_moduleslider__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      selector: '.modules__content-slider',
+      next: '.modules__info-btns .slick-next',
+      prev: '.modules__info-btns .slick-prev',
+      activeClass: '.card-active'
+    });
+  }
+
+  // feed
+  if (document.querySelector('.feed__slider')) {
+    const feedModule = new _modules_sliders_moduleslider__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      selector: '.feed__slider',
+      next: '.feed__slider .slick-next',
+      prev: '.feed__slider .slick-prev',
+      activeClass: '.feed__item-active',
+      slideClass: '.feed__item'
+    });
+  }
+
+  // difference
+  if (document.querySelector('.officerold') && document.querySelector('.officernew')) {
+    const difference = new _modules_difference__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      officerold: '.officerold',
+      officernew: '.officernew',
+      item: '.officer__card-item',
+      btn: '.card__click'
+    });
+  }
+
+  // pageSlider на module
+  if (document.querySelector('.moduleapp')) {
+    const moduleSlider = new _modules_sliders_pageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]({
+      selector: '.moduleapp',
+      next: '.next',
+      prev: '.prev'
+    });
+  }
+});
 })();
 
 /******/ })()
